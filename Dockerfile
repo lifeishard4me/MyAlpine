@@ -1,10 +1,5 @@
 FROM python:alpine
 
-ARG QL_MAINTAINER="whyour"
-LABEL maintainer="${QL_MAINTAINER}"
-ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
-ARG QL_BRANCH=develop
-
 RUN apk update && \
     apk add --no-cache openssh tzdata && \ 
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
@@ -16,6 +11,12 @@ RUN apk update && \
     echo "root:root" | chpasswd
 
 EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D", "-e"]
+
+ARG QL_MAINTAINER="whyour"
+LABEL maintainer="${QL_MAINTAINER}"
+ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
+ARG QL_BRANCH=develop
 
 ENV PNPM_HOME=/root/.local/share/pnpm \
     PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/share/pnpm:/root/.local/share/pnpm/global/5/node_modules:$PNPM_HOME \
@@ -70,5 +71,3 @@ RUN set -x \
     && rm -rf /static
     
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]
-
-CMD ["/usr/sbin/sshd", "-D", "-e"]
