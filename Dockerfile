@@ -1,6 +1,6 @@
 # Great stuff taken from: https://github.com/rastasheep/ubuntu-sshd
 
-FROM 22.06.0-beta.0-cli-alpine3.16
+FROM docker:22.06.0-beta.0-cli-alpine3.16
 RUN apk add --no-cache \
 		openssh-server
 
