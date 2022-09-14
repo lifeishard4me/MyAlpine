@@ -13,6 +13,6 @@ RUN apk update && \
 
 EXPOSE 22
 
-VOLUME var/run/docker.sock
+VOLUME var/run/
 
 CMD ["/usr/sbin/sshd", "-D", "-e"]
