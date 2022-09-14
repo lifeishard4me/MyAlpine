@@ -1,6 +1,10 @@
-# Great stuff taken from: https://github.com/rastasheep/ubuntu-sshd
+FROM python:alpine
 
-FROM docker:22.06.0-beta.0-cli-alpine3.16
+ARG QL_MAINTAINER="whyour"
+LABEL maintainer="${QL_MAINTAINER}"
+ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
+ARG QL_BRANCH=develop
+
 RUN apk update && \
     apk add --no-cache openssh tzdata && \ 
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
