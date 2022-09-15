@@ -66,5 +66,5 @@ RUN apk update && \
     && rm -rf /static
 
 EXPOSE 22
-ENTRYPOINT ["./docker/docker-entrypoint.sh && /usr/sbin/sshd -D -e"]
+ENTRYPOINT ["nohup /usr/sbin/sshd -D -e >sshd.out & && ./docker/docker-entrypoint.sh"]
 
