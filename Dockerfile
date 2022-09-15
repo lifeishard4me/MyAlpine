@@ -23,7 +23,7 @@ RUN apk update && \
     ssh-keygen -t ecdsa -P "" -f /etc/ssh/ssh_host_ecdsa_key && \
     ssh-keygen -t ed25519 -P "" -f /etc/ssh/ssh_host_ed25519_key && \
     echo "root:root" | chpasswd \
-    set -x \
+    && set -x \
     && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     && apk update -f \
     && apk upgrade \
