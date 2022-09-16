@@ -38,7 +38,7 @@ RUN apk --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/main 
     php81-pecl-apcu \
     && ln -s /usr/bin/php81 /usr/bin/php
 
-COPY --from alpine-php8.1-dev rootfs /
+COPY --from=alpine-php8.1-dev rootfs /
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
@@ -75,8 +75,8 @@ RUN apk add -U --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge
     # Download composer.
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}
 
-COPY --from alpine-php8.1-dev devfs /
-
+COPY --from=alpine-php8.1-dev devfs /
+WORkDIR ql/
 COPY ./docker-entrypoint2.sh /docker/
 EXPOSE 22 9003 5700
 ENTRYPOINT ["./docker/docker-entrypoint2.sh"]
