@@ -14,7 +14,26 @@ ENV PNPM_HOME=/root/.local/share/pnpm \
     QL_BRANCH=${QL_BRANCH}
 WORKDIR ${QL_DIR}
 
-RUN apk update \
+RUN set -x \
+    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+    && apk update -f \
+    && apk upgrade \
+    && apk --no-cache add -f bash \
+                             coreutils \
+                             moreutils \
+                             git \
+                             curl \
+                             wget \
+                             tzdata \
+                             perl \
+                             openssl \
+                             nginx \
+                             nodejs \
+                             jq \
+                             openssh \
+                             npm \
+    && rm -rf /var/cache/apk/* \ 
+    && apk update \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
     && git config --global user.email "qinglong@@users.noreply.github.com" \
