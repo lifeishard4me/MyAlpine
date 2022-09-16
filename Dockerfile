@@ -1,4 +1,4 @@
-FROM jorge07/alpine-php:8.1-dev
+FROM jorge07/alpine-php:8.1
 
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
