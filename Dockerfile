@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM jorge07/alpine-php:8.1-dev
 
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
@@ -66,5 +66,5 @@ RUN apk update && \
     && rm -rf /static
 
 EXPOSE 22
-ENTRYPOINT ["/usr/sbin/sshd -D -e && ./docker/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/sbin/sshd -D -e"]
 
