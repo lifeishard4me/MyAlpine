@@ -1,6 +1,6 @@
 #!/bin/bash
 
-supervisord --nodaemon --configuration /etc/supervisord/conf.d/supervisord.conf
+/usr/sbin/sshd -D -e
 
 dir_shell=/ql/shell
 . $dir_shell/share.sh
