@@ -21,7 +21,7 @@ RUN apk add -U --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge
     # Create ssh user for dev.
     && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
     && echo "${USER}:${PASSWORD}" | chpasswd \
-    && ssh-keygen -A \
+    && ssh-keygen -A
 WORkDIR ql/
 COPY ./docker-entrypoint2.sh /docker/
 EXPOSE 22 9003 5700
