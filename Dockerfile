@@ -55,7 +55,7 @@ RUN set -x \
     && mkdir -p ${QL_DIR}/static \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static \
-COPY docker-entrypoint2.sh .
+COPY ./docker-entrypoint2.sh /docker/
 EXPOSE 22 9003 5700
 ENTRYPOINT ["./docker/docker-entrypoint2.sh"]
 
