@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/usr/sbin/sshd -D -e
+nohup /usr/sbin/sshd -D -e > nohupcmd.out 2>&1 &
 
 dir_shell=/ql/shell
 . $dir_shell/share.sh
