@@ -14,7 +14,8 @@ ENV PNPM_HOME=/root/.local/share/pnpm \
     QL_BRANCH=${QL_BRANCH}
 WORKDIR ${QL_DIR}
 
-RUN set -x \
+RUN docker-php-ext-install sockets \
+    && set -x \
     && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     && apk update -f \
     && apk upgrade \
@@ -54,9 +55,9 @@ RUN set -x \
     && git clone -b ${QL_BRANCH} https://github.com/${QL_MAINTAINER}/qinglong-static.git /static \
     && mkdir -p ${QL_DIR}/static \
     && cp -rf /static/* ${QL_DIR}/static \
-    && rm -rf /static
-
-CMD ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord/conf.d/supervisord.conf"]
-
+    && rm -rf /static \
+COPY docker-entrypoint2.sh ./docker/
 EXPOSE 22 9003 5700
+ENTRYPOINT ["./docker/docker-entrypoint2.sh"]
+
 
