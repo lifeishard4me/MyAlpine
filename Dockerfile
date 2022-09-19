@@ -1,34 +1,25 @@
-FROM tangramor/nginx-php8-fpm:latest
+FROM jc21/nginx-proxy-manager:latest
+RUN apt-get update
 
-ARG USER=root
-ARG PASSWORD=root
+RUN apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
 
-ARG COMPOSER_VERSION=2.2.1
+RUN useradd --user-group --create-home --system mogenius
 
-RUN apk add -U --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/   \
-        php81-pear \
-        openssh \
-        supervisor \
-        autoconf \
-        git \
-        curl \
-        wget \
-        make \
-        zip \
-        php81-xdebug \
-    # Delete APK cache.
-    && rm -rf /var/cache/apk/* \
-    # Create ssh user for dev.
-    && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
-    && echo "${USER}:${PASSWORD}" | chpasswd \
-    && ssh-keygen -A \
-    # Download composer.
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}
+RUN echo 'root:root' |chpasswd
+
+RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+RUN mkdir /root/.ssh
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+EXPOSE 22
 
 ADD devfs /
 
 CMD ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord/conf.d/supervisord.conf"]
 
-EXPOSE 22 9003 5700
-
-
+EXPOSE 22 81
