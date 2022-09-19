@@ -1,7 +1,7 @@
 FROM jc21/nginx-proxy-manager:latest
 
 RUN apt-get update \
-    && apt-get install -y openssh-server --option=Dpkg::Options::=--force-confdef \
+    && apt-get install -y openssh-server supervisord --option=Dpkg::Options::=--force-confdef \
     && mkdir /var/run/sshd \
     && echo 'root:root' |chpasswd \
     && sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
