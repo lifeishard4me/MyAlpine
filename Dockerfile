@@ -1,20 +1,15 @@
 FROM jc21/nginx-proxy-manager:latest
-RUN apt-get update
 
-RUN apt-get install -y openssh-server
-RUN mkdir /var/run/sshd
-
-RUN useradd --user-group --create-home --system mogenius
-
-RUN echo 'root:root' |chpasswd
-
-RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
-
-RUN mkdir /root/.ssh
-
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get update \
+    && apt-get install -y openssh-server \
+    && mkdir /var/run/sshd \
+    && useradd --user-group --create-home --system mogenius \
+    && echo 'root:root' |chpasswd \
+    && sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
+    && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
+    && mkdir /root/.ssh \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 22
 
