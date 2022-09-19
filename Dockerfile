@@ -1,9 +1,8 @@
 FROM jc21/nginx-proxy-manager:latest
 
 RUN apt-get update \
-    && apt-get install -y openssh-server \
+    && apt-get install -y openssh-server --option=Dpkg::Options::=--force-confdef \
     && mkdir /var/run/sshd \
-    && useradd --user-group --create-home --system mogenius \
     && echo 'root:root' |chpasswd \
     && sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
     && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
